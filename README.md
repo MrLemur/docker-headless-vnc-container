@@ -1,11 +1,12 @@
-# Docker container images with "headless" VNC session
+# Docker container images with "headless" VNC & RDP session
 
-This repository contains a collection of Docker images with headless VNC environments.
+This repository contains a collection of Docker images with headless VNC & RDP environments.
 
 Each Docker image is installed with the following components:
 
 * Desktop environment [**Xfce4**](http://www.xfce.org)
 * VNC-Server (default VNC port `5901`)
+* RDP-Server (default RDP port `3389`)
 * [**noVNC**](https://github.com/novnc/noVNC) - HTML5 VNC client (default http port `6901`)
 * Browsers:
   * Chromium
@@ -28,7 +29,17 @@ Usage is **similar** for all provided images, e.g. for `soff/ubuntu-xfce-vnc`:
 - Run command with mapping to local port `5901` (vnc protocol) and `6901` (vnc web access):
 
       docker run -d -p 5901:5901 -p 6901:6901 soff/ubuntu-xfce-vnc
-  
+
+- Run command with mapping to local port `3389` (rdp protocol):
+
+      docker run -d -p 3389:3389 soff/ubuntu-xfce-vnc
+
+  * Note: use username `user` with password `password` to login rdp
+
+- Run command with mapping to local port `3389` (rdp protocol), with specific password:
+
+      docker run -d -p 3389:3389 -e USER_PASSWORD=1234 soff/ubuntu-xfce-vnc
+
 - Change the default user and group within a container to your own with adding `--user $(id -u):$(id -g)`:
 
       docker run -d -p 5901:5901 -p 6901:6901 --user $(id -u):$(id -g) soff/ubuntu-xfce-vnc

@@ -6,17 +6,7 @@ set -e
 help (){
 echo "
 USAGE:
-docker run -it -p 6901:6901 -p 5901:5901 consol/<image>:<tag> <option>
-
-IMAGES:
-consol/ubuntu-xfce-vnc
-consol/centos-xfce-vnc
-consol/ubuntu-icewm-vnc
-consol/centos-icewm-vnc
-
-TAGS:
-latest  stable version of branch 'master'
-dev     current development version of branch 'dev'
+docker run -it -p -p 3389:3389 6901:6901 -p 5901:5901 soff/ubuntu-xfce-vnc:latest <option>
 
 OPTIONS:
 -w, --wait      (default) keeps the UI and the vncserver up until SIGINT or SIGTERM will received
@@ -26,7 +16,7 @@ OPTIONS:
                 e.g. 'docker run consol/centos-xfce-vnc --debug bash'
 -h, --help      print out this help
 
-Fore more information see: https://github.com/ConSol/docker-headless-vnc-container
+Fore more information see: https://github.com/soffchen/docker-headless-vnc-container
 "
 }
 if [[ $1 =~ -h|--help ]]; then
@@ -55,6 +45,29 @@ cleanup () {
     exit 0
 }
 trap cleanup SIGINT SIGTERM
+
+## Create default user
+echo "user:x:$(id -u):100:,,,:/headless:/bin/bash" >> /etc/passwd
+
+if [ -z $USER_PASSWORD ];then
+    USER_PASSWORD="password"
+fi
+
+echo -e "\n------------------ change user password  ------------------"
+echo -e "\nPlease remember your password: $USER_PASSWORD\n"
+
+## Create the default password
+# sudo usermod --password $USER_PASSWORD user
+echo "user:$USER_PASSWORD" | sudo chpasswd
+
+## Add default user to the group with sudo permissions (fixes RDP bug with user not being in group)
+sudo usermod -aG users user
+
+## Fix permissions
+#sudo chown -R default:$(id -g) /headless/.cache/
+
+## Enable RDP
+sudo service xrdp start
 
 ## write correct window size to chrome properties
 $STARTUPDIR/chrome-init.sh
