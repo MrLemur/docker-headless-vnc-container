@@ -14,7 +14,7 @@ Each Docker image is installed with the following components:
 
 ## Current provided OS & UI sessions:
 
-* `consol/ubuntu-xfce-vnc`: __Ubuntu with `Xfce4` UI session__
+* `soff/ubuntu-xfce-vnc`: __Ubuntu with `Xfce4` UI session__
 
   [![](https://images.microbadger.com/badges/version/consol/ubuntu-xfce-vnc.svg)](https://hub.docker.com/r/consol/ubuntu-xfce-vnc/) [![](https://images.microbadger.com/badges/image/consol/ubuntu-xfce-vnc.svg)](http://microbadger.com/images/consol/ubuntu-xfce-vnc)
 
