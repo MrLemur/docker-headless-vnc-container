@@ -19,27 +19,23 @@ Each Docker image is installed with the following components:
   [![](https://images.microbadger.com/badges/version/consol/ubuntu-xfce-vnc.svg)](https://hub.docker.com/r/consol/ubuntu-xfce-vnc/) [![](https://images.microbadger.com/badges/image/consol/ubuntu-xfce-vnc.svg)](http://microbadger.com/images/consol/ubuntu-xfce-vnc)
 
 ## Usage
-Usage is **similar** for all provided images, e.g. for `consol/centos-xfce-vnc`:
+Usage is **similar** for all provided images, e.g. for `soff/ubuntu-xfce-vnc`:
 
 - Print out help page:
 
-      docker run consol/centos-xfce-vnc --help
+      docker run soff/ubuntu-xfce-vnc --help
 
 - Run command with mapping to local port `5901` (vnc protocol) and `6901` (vnc web access):
 
-      docker run -d -p 5901:5901 -p 6901:6901 consol/centos-xfce-vnc
+      docker run -d -p 5901:5901 -p 6901:6901 soff/ubuntu-xfce-vnc
   
 - Change the default user and group within a container to your own with adding `--user $(id -u):$(id -g)`:
 
-      docker run -d -p 5901:5901 -p 6901:6901 --user $(id -u):$(id -g) consol/centos-xfce-vnc
+      docker run -d -p 5901:5901 -p 6901:6901 --user $(id -u):$(id -g) soff/ubuntu-xfce-vnc
 
 - If you want to get into the container use interactive mode `-it` and `bash`
       
-      docker run -it -p 5901:5901 -p 6901:6901 consol/centos-xfce-vnc bash
-
-- Build an image from scratch:
-
-      docker build -t consol/centos-xfce-vnc centos-xfce-vnc
+      docker run -it -p 5901:5901 -p 6901:6901 soff/ubuntu-xfce-vnc bash
 
 # Connect & Control
 If the container is started like mentioned above, connect via one of these options:
