@@ -1,15 +1,9 @@
 # This Dockerfile is used to build an headles vnc image based on Ubuntu
 
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
-MAINTAINER Simon Hofmann "simon.hofmann@consol.de"
-ENV REFRESHED_AT 2018-10-29
-
-LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium" \
-      io.k8s.display-name="Headless VNC Container based on Ubuntu" \
-      io.openshift.expose-services="6901:http,5901:xvnc" \
-      io.openshift.tags="vnc, ubuntu, xfce" \
-      io.openshift.non-scalable=true
+MAINTAINER Soff Chen "soffchen@gmail.com"
+ENV REFRESHED_AT 2020-01-02
 
 ## Connection ports for controlling the UI:
 # VNC port:5901
@@ -54,6 +48,8 @@ RUN $INST_SCRIPTS/chrome.sh
 ### Install xfce UI
 RUN $INST_SCRIPTS/xfce_ui.sh
 ADD ./src/common/xfce/ $HOME/
+
+RUN apt update && apt upgrade -y && apt autoremove -y
 
 ### configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh

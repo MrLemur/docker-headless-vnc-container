@@ -1,6 +1,7 @@
 ## Changelog of the Docker headless VNC images
 
 ### Version 2.0.0:
+* upgrade to Ubuntu 18.04
 * remove CentOS
 * remove Firefox
 * remove IceWM
