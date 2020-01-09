@@ -26,6 +26,7 @@ fi
 
 # should also source $STARTUPDIR/generate_container_user
 source $HOME/.bashrc
+rm $HOME/.bashrc
 
 # add `--skip` to startup args, to skip the VNC startup procedure
 if [[ $1 =~ -s|--skip ]]; then
@@ -49,10 +50,6 @@ trap cleanup SIGINT SIGTERM
 ## Create default user
 echo "user:x:$(id -u):100:,,,:/headless:/bin/bash" >> /etc/passwd
 
-if [ -z $USER_PASSWORD ];then
-    USER_PASSWORD="password"
-fi
-
 echo -e "\n------------------ change user password  ------------------"
 echo -e "\nPlease remember your password: $USER_PASSWORD\n"
 
@@ -60,8 +57,10 @@ echo -e "\nPlease remember your password: $USER_PASSWORD\n"
 # sudo usermod --password $USER_PASSWORD user
 echo "user:$USER_PASSWORD" | sudo chpasswd
 
-## Add default user to the group with sudo permissions (fixes RDP bug with user not being in group)
-sudo usermod -aG users user
+echo -e "\n------------------ set preferred applications  ------------------"
+
+sudo sed -i "s/WebBrowser=.*/WebBrowser=chromium/g" /etc/xdg/xfce4/helpers.rc
+sudo sed -i "s/TerminalEmulator=.*/TerminalEmulator=xfce4-terminal/g" /etc/xdg/xfce4/helpers.rc
 
 ## Fix permissions
 #sudo chown -R default:$(id -g) /headless/.cache/
