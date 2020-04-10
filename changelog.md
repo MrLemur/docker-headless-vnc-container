@@ -71,3 +71,4 @@
 * Remove not needed Screensaver pacakges ([#11](https://github.com/ConSol/docker-headless-vnc-container/issues/11))        
 * Use Firefox 45 as fixed browser as long current firefox crashes ([#16](https://github.com/ConSol/docker-headless-vnc-container/issues/16))
 * Fix issue be starting of reattached containers on `docker start` ([#15](https://github.com/ConSol/docker-headless-vnc-container/issues/15))
+
